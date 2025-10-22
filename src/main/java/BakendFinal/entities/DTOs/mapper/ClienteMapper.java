@@ -2,8 +2,10 @@ package BakendFinal.entities.DTOs.mapper;
 
 import org.springframework.stereotype.Component;
 
-import BakendFinal.entities.DTOs.client.*;
+import BakendFinal.entities.DTOs.client.ClienteCreate;
+import BakendFinal.entities.DTOs.client.ClienteDTO;
 import BakendFinal.entities.models.Cliente;
+import BakendFinal.utils.PasswordUtils;
 
 @Component
 public class ClienteMapper implements BaseMapper <Cliente,ClienteDTO,ClienteCreate>{
@@ -11,7 +13,7 @@ public class ClienteMapper implements BaseMapper <Cliente,ClienteDTO,ClienteCrea
     public Cliente toEntity(ClienteCreate dto){
         return Cliente.builder()
                 .nombre(dto.nombre())
-                .pass(dto.pass())
+                .pass(PasswordUtils.hashPassword(dto.pass())) // <-- Hashea aquí
                 .email(dto.email())
                 .build();
     }
