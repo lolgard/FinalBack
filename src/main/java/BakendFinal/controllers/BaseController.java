@@ -1,5 +1,58 @@
 package BakendFinal.controllers;
 
-public abstract class BaseController {
-    
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
+import BakendFinal.services.BaseService;
+
+public abstract class BaseController<D, DC, DE, ID, S extends BaseService<D, DC, DE, ID>> {
+    @Autowired
+    protected S baseService;
+
+    @GetMapping
+    public List<D> listarTodos() {
+        return baseService.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerPorId(@PathVariable ID id) {
+        try {
+            D entidad = baseService.obtenerPorId(id);
+            return entidad != null ? ResponseEntity.ok(entidad) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> crear(@RequestBody DC dto) {
+        try {
+            return ResponseEntity.ok(baseService.crear(dto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable ID id, @RequestBody DE entidad) {
+        try {
+            return ResponseEntity.ok(baseService.actualizar(id, entidad));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable ID id) {
+        try {
+            baseService.eliminar(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
