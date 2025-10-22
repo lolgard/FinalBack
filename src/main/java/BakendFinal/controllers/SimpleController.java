@@ -8,7 +8,7 @@ public class SimpleController {
 
     @GetMapping("/")
     public String home() {
-        return "Backend funcionando!";
+        return "Backend funcionando! bld";
     }
 
     @GetMapping("/ping")
