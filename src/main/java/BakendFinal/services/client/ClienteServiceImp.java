@@ -1,11 +1,14 @@
 package BakendFinal.services.client;
 
+import org.springframework.stereotype.Service;
+
 import BakendFinal.entities.DTOs.client.ClienteCreate;
 import BakendFinal.entities.DTOs.client.ClienteDTO;
 import BakendFinal.entities.DTOs.client.ClienteEdit;
 import BakendFinal.entities.models.Cliente;
 import BakendFinal.services.BaseServiceImp;
 
+@Service
 public class ClienteServiceImp  extends BaseServiceImp<Cliente,ClienteDTO,ClienteCreate,ClienteEdit,Long> implements ClienteService {
     @Override
     public ClienteDTO actualizar (Long id, ClienteEdit dto) {
