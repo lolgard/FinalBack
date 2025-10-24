@@ -30,6 +30,8 @@ public class ClienteServiceImp  extends BaseServiceImp<Cliente,ClienteDTO,Client
     public void login(String email, String password) {
         Cliente cliente = clienteRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        cliente.setLoggedIn(true);
+        clienteRepository.save(cliente);
         if (!cliente.getPass().equals(password)) {
             throw new RuntimeException("Contraseña incorrecta");
         }
