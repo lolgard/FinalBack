@@ -1,7 +1,10 @@
 package BakendFinal.entities.DTOs.client;
 
 public record ClienteDTO(
-    String nombre, 
-    String email, 
-    String pass) {
+    Long id,
+    String name,
+    String email,
+    String pass,
+    String role,
+    Boolean loggedIn) {
 }

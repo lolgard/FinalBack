@@ -12,17 +12,21 @@ public class ClienteMapper implements BaseMapper <Cliente,ClienteDTO,ClienteCrea
     @Override
     public Cliente toEntity(ClienteCreate dto){
         return Cliente.builder()
-                .nombre(dto.nombre())
-                .pass(PasswordUtils.hashPassword(dto.pass())) // <-- Hashea aquí
+                .name(dto.name())
+                .pass(PasswordUtils.hashPassword(dto.pass()))
                 .email(dto.email())
+                .role(dto.role())
                 .build();
     }
     @Override
     public ClienteDTO toDto(Cliente entity){
         return new ClienteDTO(
-                entity.getNombre(),
+                entity.getId(),
+                entity.getName(),
                 entity.getEmail(),
-                entity.getPass()
+                entity.getPass(),
+                entity.getRole(),
+                entity.getLoggedIn()
         );
     }
 }

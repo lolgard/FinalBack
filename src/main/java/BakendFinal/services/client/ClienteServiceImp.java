@@ -19,7 +19,7 @@ public class ClienteServiceImp  extends BaseServiceImp<Cliente,ClienteDTO,Client
     @Override
     public ClienteDTO actualizar (Long id, ClienteEdit dto) {
         Cliente cliente = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-        cliente.setNombre(dto.nombre());
+        cliente.setName(dto.name());
         cliente.setEmail(dto.email());
         cliente.setPass(dto.pass());
         Cliente clienteActualizado = baseRepository.save(cliente);

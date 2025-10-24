@@ -1,8 +1,9 @@
 package BakendFinal.entities.DTOs.client;
 
 public record ClienteCreate(
-    String nombre,
+    String name,
     String email,
-    String pass
+    String pass,
+    String role
 ) {
 }
