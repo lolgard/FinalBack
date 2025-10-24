@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import BakendFinal.entities.enums.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @NoArgsConstructor
@@ -25,7 +28,9 @@ public class Cliente extends Base {
 
     @Builder.Default
     private Boolean loggedIn = Boolean.FALSE;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     public void setPass(String pass) {

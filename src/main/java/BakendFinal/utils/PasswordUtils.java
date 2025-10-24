@@ -18,4 +18,8 @@ public class PasswordUtils {
             throw new RuntimeException("Error al encriptar la contraseña", e);
         }
     }
+    public static boolean verifyPassword(String password, String hashedPassword) {
+        String hashedInput = hashPassword(password);
+        return hashedInput.equals(hashedPassword);
+    }
 }

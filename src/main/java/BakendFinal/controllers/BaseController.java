@@ -3,6 +3,7 @@ package BakendFinal.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import BakendFinal.services.BaseService;
 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(
+    origins = {
+        "${HOST_FRONTEND_1}",
+        "${HOST_FRONTEND_2}"
+    },
+    allowCredentials = "true"
+)
 public abstract class BaseController<D, DC, DE, ID, S extends BaseService<D, DC, DE, ID>> {
     @Autowired
     protected S baseService;
