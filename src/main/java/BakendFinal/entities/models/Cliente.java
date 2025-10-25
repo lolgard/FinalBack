@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import BakendFinal.entities.enums.Role;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
@@ -22,6 +23,8 @@ import jakarta.persistence.Enumerated;
 public class Cliente extends Base {
 
     private String name;
+    
+    @Column(unique = true, nullable = false)
     private String email;
     @Setter(AccessLevel.NONE)
     private String pass;

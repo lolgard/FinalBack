@@ -18,6 +18,16 @@ public class ClienteServiceImp extends BaseServiceImp<Cliente, ClienteDTO, Clien
     private ClienteRepository clienteRepository;
 
     @Override
+    public ClienteDTO crear(ClienteCreate dto) {
+        // Verificar si el email ya existe
+        if (clienteRepository.findByEmail(dto.email()).isPresent()) {
+            throw new RuntimeException("El correo electrónico ya está registrado");
+        }
+        // Si no existe, proceder con la creación normal
+        return super.crear(dto);
+    }
+
+    @Override
     public ClienteDTO actualizar(Long id, ClienteEdit dto) {
         Cliente cliente = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
         cliente.setName(dto.name());
