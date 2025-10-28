@@ -1,13 +1,14 @@
 package BakendFinal.config;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class DotenvConfig implements EnvironmentPostProcessor {
 
@@ -33,7 +34,10 @@ public class DotenvConfig implements EnvironmentPostProcessor {
                     break;
                 } catch (Exception e) {
                     // Continuar con la siguiente ruta
+                    System.out.println("Error:" + e.getMessage() + " al buscar .env en: " + path);
+                    continue;
                 }
+
             }
             
             if (dotenv == null) {
