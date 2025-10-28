@@ -31,7 +31,7 @@ public abstract class BaseController<D, DC, DE, ID, S extends BaseService<D, DC,
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerPorId(@PathVariable ID id) {
+    public ResponseEntity<?> obtenerPorId(@PathVariable("id") ID id) {
         try {
             D entidad = baseService.obtenerPorId(id);
             return entidad != null ? ResponseEntity.ok(entidad) : ResponseEntity.notFound().build();
@@ -50,7 +50,7 @@ public abstract class BaseController<D, DC, DE, ID, S extends BaseService<D, DC,
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable ID id, @RequestBody DE entidad) {
+    public ResponseEntity<?> actualizar(@PathVariable("id") ID id, @RequestBody DE entidad) {
         try {
             return ResponseEntity.ok(baseService.actualizar(id, entidad));
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public abstract class BaseController<D, DC, DE, ID, S extends BaseService<D, DC,
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable ID id) {
+    public ResponseEntity<?> eliminar(@PathVariable("id") ID id) {
         try {
             baseService.eliminar(id);
             return ResponseEntity.ok().build();

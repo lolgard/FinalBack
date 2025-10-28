@@ -1,7 +1,11 @@
 package BakendFinal.entities.models;
 
+import BakendFinal.entities.enums.Role;
 import BakendFinal.utils.PasswordUtils;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import BakendFinal.entities.enums.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 @Entity
 @NoArgsConstructor
@@ -20,7 +20,7 @@ import jakarta.persistence.Enumerated;
 @Getter
 @Setter
 @SuperBuilder
-public class Cliente extends Base {
+public class Usuario extends Base {
 
     private String name;
     

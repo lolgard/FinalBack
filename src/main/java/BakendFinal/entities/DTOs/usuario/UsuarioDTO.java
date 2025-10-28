@@ -1,8 +1,8 @@
-package BakendFinal.entities.DTOs.client;
+package BakendFinal.entities.DTOs.usuario;
 
 import BakendFinal.entities.enums.Role;
 
-public record ClienteDTO(
+public record UsuarioDTO(
     Long id,
     String name,
     String email,

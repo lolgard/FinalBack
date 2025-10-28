@@ -6,26 +6,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import BakendFinal.entities.DTOs.client.*;
-import BakendFinal.services.client.ClienteService;
+import BakendFinal.entities.DTOs.usuario.UsuarioDTO;
+import BakendFinal.entities.DTOs.usuario.UsuarioEdit;
+import BakendFinal.entities.DTOs.usuario.UsuarioLogout;
+import BakendFinal.entities.DTOs.usuario.UsuarioPass;
+import BakendFinal.services.usuario.UsuarioService;
+import BakendFinal.entities.DTOs.usuario.UsuarioCreate;
 
 
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController extends BaseController<ClienteDTO
-,ClienteCreate,ClienteEdit,Long,ClienteService>{
+@RequestMapping("/usuario")
+public class UsuarioController extends BaseController<UsuarioDTO
+,UsuarioCreate,UsuarioEdit,Long,UsuarioService>{
 
     @PostMapping("/login")
-    public ResponseEntity<?> login (@RequestBody ClientePass loginDTO){
+    public ResponseEntity<?> login (@RequestBody UsuarioPass loginDTO){
         try{
-            ClienteDTO cliente = baseService.login(loginDTO.email(), loginDTO.pass());
-            return ResponseEntity.ok(cliente);
+            UsuarioDTO usuario = baseService.login(loginDTO.email(), loginDTO.pass());
+            return ResponseEntity.ok(usuario);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody ClienteLogout logoutDTO){
+    public ResponseEntity<?> logout(@RequestBody UsuarioLogout logoutDTO){
         try{
             baseService.logout(logoutDTO.email());
             return ResponseEntity.ok("Logout successful");

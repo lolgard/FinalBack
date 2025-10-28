@@ -17,5 +17,18 @@ public abstract class Base {
     @Builder.Default
     private Boolean eliminado = Boolean.FALSE;
 
+    // marca como eliminado (soft delete)
+    public void eliminar() {
+        this.eliminado = Boolean.TRUE;
+    }
 
+    // restaura (opcional)
+    public void restaurar() {
+        this.eliminado = Boolean.FALSE;
+    }
+
+    // conveniencia
+    public boolean isEliminado() {
+        return Boolean.TRUE.equals(this.eliminado);
+    }
 }

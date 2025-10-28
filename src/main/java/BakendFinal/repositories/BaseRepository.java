@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @NoRepositoryBean
 @Repository
 public interface BaseRepository<E,ID> extends JpaRepository<E, ID> {
-    
 }
