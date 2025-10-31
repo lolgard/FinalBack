@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import BakendFinal.entities.DTOs.mapper.BaseMapper;
-import BakendFinal.repositories.BaseRepository;
 import BakendFinal.entities.models.Base;
+import BakendFinal.repositories.BaseRepository;
 
-public abstract class BaseServiceImp <E,D,DC,DE,ID> implements BaseService<D,DC,DE,ID>{
+public abstract class BaseServiceImp <E extends Base,D,DC,DE,ID> implements BaseService<D,DC,DE,ID>{
 
     @Autowired
     protected BaseRepository<E,ID> baseRepository;
@@ -61,13 +61,7 @@ public abstract class BaseServiceImp <E,D,DC,DE,ID> implements BaseService<D,DC,
             throw new RuntimeException("Entidad no encontrada");
         }
         E entity = entityOpt.get();
-        if (entity instanceof Base) {
-            // usar método de la entidad para encapsular la lógica
-            ((Base) entity).eliminar();
+            entity.eliminar();
             baseRepository.save(entity);
-        } else {
-            baseRepository.deleteById(id);
-        }
     }
-    
 }

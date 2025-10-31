@@ -1,0 +1,121 @@
+##Variables
+  @baseUrl = http://localhost:5020
+### CATEGORIAS - Listar
+GET {{baseUrl}}/categorias
+Accept: application/json
+
+### CATEGORIAS - Obtener por id
+GET {{baseUrl}}/categorias/1
+Accept: application/json
+
+### CATEGORIAS - Crear
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Porno"
+}
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Mecanica"
+}
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Jardineria"
+}
+
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Gaming"
+}
+
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Comida"
+}
+
+
+
+### CATEGORIAS - Actualizar (usa CategoriaEdit: nombre y precio según tu DTO actual)
+PUT {{baseUrl}}/categorias/4
+Content-Type: application/json
+
+{
+  "nombre": "Electrodomesticos de Hogar"
+}
+
+### CATEGORIAS - Eliminar
+DELETE {{baseUrl}}/categorias/4
+
+### PRODUCTOS - Listar
+GET {{baseUrl}}/productos
+Accept: application/json
+
+### PRODUCTOS - Obtener por id
+GET {{baseUrl}}/productos/1
+Accept: application/json
+
+### PRODUCTOS - Crear
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Llave Allen",
+  "precio": 1000.99,
+  "categoriaId": 2,
+  "marca": "SteelPro"
+}
+### PRODUCTOS - Crear
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Pala de Jardín",
+  "precio": 2500.99,
+  "categoriaId": 3,
+  "marca": "Gardena"
+}
+### PRODUCTOS - Crear
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Muñeca Inflable",
+  "precio": 599.99,
+  "categoriaId": 6,
+  "marca": "xxxx"
+}
+### PRODUCTOS - Crear
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "LLave Inglesa",
+  "precio": 3000.0,
+  "categoriaId":  2,
+  "marca": "Bahco"
+}
+
+### PRODUCTOS - Actualizar (ProductoEdit tiene nombre y precio)
+PUT {{baseUrl}}/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Caja de Herramientas",
+  "precio": 5000.5
+}
+
+### PRODUCTOS - Eliminar
+DELETE {{baseUrl}}/productos/6
