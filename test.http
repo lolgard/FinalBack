@@ -1,121 +1,130 @@
 ##Variables
-  @baseUrl = http://localhost:5020
-### CATEGORIAS - Listar
+@baseUrl = http://localhost:5020
+
+# =====================================================
+# CATEGORIAS - CRUD COMPLETO
+# =====================================================
+
+### CATEGORIAS - Listar todas las categorías
 GET {{baseUrl}}/categorias
 Accept: application/json
 
-### CATEGORIAS - Obtener por id
+### CATEGORIAS - Obtener categoría por ID específico
 GET {{baseUrl}}/categorias/1
 Accept: application/json
 
-### CATEGORIAS - Crear
+### CATEGORIAS - Crear nueva categoría
 POST {{baseUrl}}/categorias
 Content-Type: application/json
 
 {
-  "nombre": "Porno"
+  "nombre": "Hamburguesas"
 }
-###
-POST {{baseUrl}}/categorias
+
+### CATEGORIAS - Actualizar categoría existente
+PUT {{baseUrl}}/categorias/1
 Content-Type: application/json
 
 {
-  "nombre": "Mecanica"
-}
-###
-POST {{baseUrl}}/categorias
-Content-Type: application/json
-
-{
-  "nombre": "Jardineria"
+  "nombre": "Hamburguesas Premium"
 }
 
-###
-POST {{baseUrl}}/categorias
-Content-Type: application/json
+### CATEGORIAS - Eliminar categoría por ID
+DELETE {{baseUrl}}/categorias/1
 
-{
-  "nombre": "Gaming"
-}
+# =====================================================
+# PRODUCTOS - CRUD COMPLETO CON IMAGEN Y STOCK
+# =====================================================
 
-###
-POST {{baseUrl}}/categorias
-Content-Type: application/json
-
-{
-  "nombre": "Comida"
-}
-
-
-
-### CATEGORIAS - Actualizar (usa CategoriaEdit: nombre y precio según tu DTO actual)
-PUT {{baseUrl}}/categorias/4
-Content-Type: application/json
-
-{
-  "nombre": "Electrodomesticos de Hogar"
-}
-
-### CATEGORIAS - Eliminar
-DELETE {{baseUrl}}/categorias/4
-
-### PRODUCTOS - Listar
+### PRODUCTOS - Listar todos los productos
 GET {{baseUrl}}/productos
 Accept: application/json
 
-### PRODUCTOS - Obtener por id
-GET {{baseUrl}}/productos/1
+### PRODUCTOS - Obtener producto por ID específico
+GET {{baseUrl}}/productos/4
 Accept: application/json
 
-### PRODUCTOS - Crear
+### PRODUCTOS - Crear nuevo producto con imagen y stock
 POST {{baseUrl}}/productos
 Content-Type: application/json
 
 {
-  "nombre": "Llave Allen",
-  "precio": 1000.99,
-  "categoriaId": 2,
-  "marca": "SteelPro"
+  "nombre": "Hamburguesa Triple Deluxe",
+  "precio": 12000,
+  "categoriaId": 1,
+  "marca": "Smash Burger",
+  "imagen": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300",
+  "stock": 25
 }
-### PRODUCTOS - Crear
+
+### PRODUCTOS - Actualizar producto existente (con imagen y stock)
+PUT {{baseUrl}}/productos/4
+Content-Type: application/json
+
+{
+  "nombre": "Hamburguesa Triple Actualizada",
+  "precio": 13500,
+  "categoriaId": 1,
+  "marca": "Smash Burger Premium",
+  "imagen": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=300",
+  "stock": 30
+}
+
+### PRODUCTOS - Eliminar producto por ID
+DELETE {{baseUrl}}/productos/4
+
+# =====================================================
+# CASOS ESPECIALES Y VALIDACIONES
+# =====================================================
+
+### PRODUCTOS - Crear producto sin imagen (imagen = null)
 POST {{baseUrl}}/productos
 Content-Type: application/json
 
 {
-  "nombre": "Pala de Jardín",
-  "precio": 2500.99,
-  "categoriaId": 3,
-  "marca": "Gardena"
+  "nombre": "Milanesa con Puré",
+  "precio": 8500,
+  "categoriaId": 1,
+  "marca": "Milanesa de carne con puré de papas",
+  "imagen": null,
+  "stock": 8
 }
-### PRODUCTOS - Crear
+
+### PRODUCTOS - Crear producto con stock 0 (sin disponibilidad)
 POST {{baseUrl}}/productos
 Content-Type: application/json
 
 {
-  "nombre": "Muñeca Inflable",
-  "precio": 599.99,
-  "categoriaId": 6,
-  "marca": "xxxx"
+  "nombre": "Empanadas x12",
+  "precio": 6000,
+  "categoriaId": 1,
+  "marca": "Docena de empanadas de carne",
+  "imagen": "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=300",
+  "stock": 0
 }
-### PRODUCTOS - Crear
+
+### VALIDACIÓN - Probar URL de imagen inválida
 POST {{baseUrl}}/productos
 Content-Type: application/json
 
 {
-  "nombre": "LLave Inglesa",
-  "precio": 3000.0,
-  "categoriaId":  2,
-  "marca": "Bahco"
+  "nombre": "Producto Test",
+  "precio": 1000,
+  "categoriaId": 1,
+  "marca": "Test",
+  "imagen": "url-invalida",
+  "stock": 5
 }
 
-### PRODUCTOS - Actualizar (ProductoEdit tiene nombre y precio)
-PUT {{baseUrl}}/productos/1
+### VALIDACIÓN - Probar stock negativo (debe fallar)
+POST {{baseUrl}}/productos
 Content-Type: application/json
 
 {
-  "nombre": "Caja de Herramientas",
-  "precio": 5000.5
+  "nombre": "Producto Stock Negativo",
+  "precio": 1000,
+  "categoriaId": 1,
+  "marca": "Test",
+  "imagen": "https://via.placeholder.com/300",
+  "stock": -5
 }
-
-### PRODUCTOS - Eliminar
-DELETE {{baseUrl}}/productos/6

@@ -4,7 +4,9 @@ public record ProductoCreate(
     String nombre,
     double precio,
     String marca,
-    Long categoriaId
+    Long categoriaId,
+    String imagen,
+    int stock
 ) {
     
 }

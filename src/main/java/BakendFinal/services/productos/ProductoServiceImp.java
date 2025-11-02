@@ -24,6 +24,8 @@ public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, Pr
         Producto producto = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         producto.setNombre(editDto.nombre());
         producto.setPrecio(editDto.precio());
+        producto.setImagen(editDto.imagen());
+        producto.setStock(editDto.stock());
         baseRepository.save(producto);
         return baseMapper.toDto(producto);
 	}

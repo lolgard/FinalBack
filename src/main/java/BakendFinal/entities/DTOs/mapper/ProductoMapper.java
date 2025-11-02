@@ -23,6 +23,8 @@ public class ProductoMapper implements BaseMapper<Producto,ProductoDTO,ProductoC
                 .precio(d.precio())
                 .marca(d.marca())
                 .categoria(categoria)
+                .imagen(d.imagen())
+                .stock(d.stock())
                 .build();
     }
 
@@ -34,7 +36,9 @@ public class ProductoMapper implements BaseMapper<Producto,ProductoDTO,ProductoC
                 e.getNombre(),
                 e.getPrecio(),
                 e.getMarca(),
-                categoriaNombre
+                categoriaNombre,
+                e.getImagen(),
+                e.getStock()
         );
     }
     

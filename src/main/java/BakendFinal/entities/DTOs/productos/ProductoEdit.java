@@ -2,7 +2,9 @@ package BakendFinal.entities.DTOs.productos;
 
 public record ProductoEdit(
     String nombre,
-    double precio
+    double precio,
+    String imagen,
+    int stock
 ) {
     
 }
