@@ -1,7 +1,8 @@
 package BakendFinal.entities.DTOs.categorias;
 
 public record CategoriaCreate(
-    String nombre
-) {
-    
+        String nombre,
+        String descripcion
+        ) {
+
 }

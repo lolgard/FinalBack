@@ -11,6 +11,7 @@ public class CategoriaMapper implements BaseMapper<Categoria,CategoriaDTO,Catego
     public Categoria toEntity(CategoriaCreate d) {
         return Categoria.builder()
                 .nombre(d.nombre())
+                .descripcion(d.descripcion())
                 .build();
     }
 
@@ -18,7 +19,8 @@ public class CategoriaMapper implements BaseMapper<Categoria,CategoriaDTO,Catego
     public CategoriaDTO toDto(Categoria e) {
         return new CategoriaDTO(
                 e.getId(),
-                e.getNombre()
+                e.getNombre(),
+                e.getDescripcion()
         );
     }
 }

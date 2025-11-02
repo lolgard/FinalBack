@@ -19,6 +19,7 @@ import java.util.ArrayList;
 @SuperBuilder
 public class Categoria extends Base{
     private String nombre;
+    private String descripcion;
 
     @OneToMany(mappedBy = "categoria")
     @Builder.Default

@@ -26,7 +26,7 @@ public class CategoriaServiceImp extends BaseServiceImp<Categoria, CategoriaDTO,
 	public CategoriaDTO actualizar(Long id, CategoriaEdit editDto) {
         Categoria categoria = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
         categoria.setNombre(editDto.nombre());
-
+        categoria.setDescripcion(editDto.descripcion());
         Categoria categoriaActualizada = baseRepository.save(categoria);
         return baseMapper.toDto(categoriaActualizada);
 	}
