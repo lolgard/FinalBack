@@ -26,6 +26,12 @@ public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, Pr
         producto.setPrecio(editDto.precio());
         producto.setImagen(editDto.imagen());
         producto.setStock(editDto.stock());
+        if(editDto.categoriaId() != null){
+            if(!categoriaRepository.existsById(editDto.categoriaId())){
+                throw new RuntimeException("Categoría no existente o eliminada");
+            }
+            producto.setCategoria(categoriaRepository.findById(editDto.categoriaId()).get());
+        }
         baseRepository.save(producto);
         return baseMapper.toDto(producto);
 	}

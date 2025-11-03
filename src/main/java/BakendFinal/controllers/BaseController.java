@@ -21,6 +21,13 @@ import BakendFinal.services.BaseService;
     },
     allowCredentials = "true"
 )
+/*
+ * D es el DTO
+ * DC es el DTO de creación
+ * DE es el DTO de edición
+ * ID es el tipo de dato del ID (Long, String, etc)
+ * S es el servicio correspondiente
+ */
 public abstract class BaseController<D, DC, DE, ID, S extends BaseService<D, DC, DE, ID>> {
     @Autowired
     protected S baseService;
