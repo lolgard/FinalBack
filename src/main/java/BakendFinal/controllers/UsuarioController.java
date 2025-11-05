@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import BakendFinal.entities.DTOs.usuario.UsuarioCreate;
 import BakendFinal.entities.DTOs.usuario.UsuarioDTO;
 import BakendFinal.entities.DTOs.usuario.UsuarioEdit;
 import BakendFinal.entities.DTOs.usuario.UsuarioLogout;
 import BakendFinal.entities.DTOs.usuario.UsuarioPass;
 import BakendFinal.services.usuario.UsuarioService;
-import BakendFinal.entities.DTOs.usuario.UsuarioCreate;
 
-
+// localhost:8080/usuario/login
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController extends BaseController<UsuarioDTO
