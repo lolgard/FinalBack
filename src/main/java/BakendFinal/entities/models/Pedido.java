@@ -30,8 +30,22 @@ public class Pedido extends Base {
     @Enumerated(EnumType.STRING)
     @lombok.Builder.Default
     private Estado estado = Estado.PENDIENTE;
-    @lombok.Builder.Default
+
+
+    
     @OneToMany(mappedBy="pedido",cascade=CascadeType.ALL, orphanRemoval=true)
+    @lombok.Builder.Default
     private List<DetallePedido> detallePedidos = new ArrayList<>();
+    
     private double total;
+
+    private void agregarDetalle(DetallePedido detallePedido) {
+        this.detallePedidos.add(detallePedido);
+    }
+
+    private void calcularTotal() {
+        this.total = detallePedidos.stream()
+                .mapToDouble(DetallePedido::getSubtotal)
+                .sum();
+    }
 }

@@ -1,15 +1,14 @@
 package BakendFinal.entities.models;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 @NoArgsConstructor
@@ -17,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 @Getter
 @Setter
 @SuperBuilder
+
 public class Producto extends Base{
     private String nombre;
     private double precio;
@@ -27,4 +27,5 @@ public class Producto extends Base{
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
 }
