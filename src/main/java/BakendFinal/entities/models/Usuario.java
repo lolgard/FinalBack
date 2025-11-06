@@ -42,7 +42,7 @@ public class Usuario extends Base {
     private Role role;
 
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @lombok.Builder.Default
     @JoinTable(name = "usuario_pedidos",
     joinColumns = @JoinColumn(name = "usuario_id"),
