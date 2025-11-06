@@ -15,7 +15,8 @@ services:
       HOST_FRONTEND_1: ${HOST_FRONTEND_1}
       HOST_FRONTEND_2: ${HOST_FRONTEND_2}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - backend_network
   db:
@@ -28,6 +29,11 @@ services:
       - "${DB_PORT}:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - backend_network
 
