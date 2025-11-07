@@ -1,6 +1,7 @@
 package BakendFinal.entities.DTOs.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoCreate;
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoDTO;
@@ -10,6 +11,7 @@ import BakendFinal.entities.models.Producto;
 import BakendFinal.repositories.PedidoRepository;
 import BakendFinal.repositories.ProductoRepository;
 
+@Component
 public class DetallePedidoMapper implements BaseMapper<DetallePedido, DetallePedidoDTO, DetallePedidoCreate> {
 
     @Autowired

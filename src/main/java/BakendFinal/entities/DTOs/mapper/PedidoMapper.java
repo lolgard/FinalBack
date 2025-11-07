@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoDTO;
 import BakendFinal.entities.DTOs.pedido.PedidoCreate;
@@ -14,6 +15,7 @@ import BakendFinal.entities.models.Pedido;
 import BakendFinal.entities.models.Usuario;
 import BakendFinal.repositories.UsuarioRepository;
 
+@Component
 public class PedidoMapper implements BaseMapper<Pedido, PedidoDTO, PedidoCreate> {
 
     @Autowired
