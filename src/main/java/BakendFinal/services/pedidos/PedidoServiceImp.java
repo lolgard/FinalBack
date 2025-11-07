@@ -12,7 +12,9 @@ import BakendFinal.entities.enums.Estado;
 import BakendFinal.entities.models.Pedido;
 import BakendFinal.services.BaseServiceImp;
 import BakendFinal.services.productos.ProductoService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PedidoServiceImp extends BaseServiceImp<Pedido, PedidoDTO, PedidoCreate, PedidoEdit, Long> implements PedidoService {
 
     @Autowired
