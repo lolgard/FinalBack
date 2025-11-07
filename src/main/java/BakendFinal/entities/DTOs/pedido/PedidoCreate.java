@@ -7,7 +7,8 @@ import BakendFinal.entities.DTOs.detallePedido.DetallePedidoCreate;
 
 public record PedidoCreate(
     LocalDate fecha,
-    List<DetallePedidoCreate> detalles
+    List<DetallePedidoCreate> detalles,
+    Long usuarioId
 ) {
     
 }

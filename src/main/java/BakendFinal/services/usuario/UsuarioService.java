@@ -8,4 +8,5 @@ import BakendFinal.services.BaseService;
 public interface UsuarioService extends BaseService<UsuarioDTO,UsuarioCreate,UsuarioEdit,Long>{
     UsuarioDTO login(String email, String password);
     UsuarioDTO logout(String email);
+    void añadirPedido(Long usuarioId, Long pedidoId);
 }

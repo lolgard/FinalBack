@@ -10,6 +10,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,19 +35,11 @@ public class Pedido extends Base {
 
 
     
-    @OneToMany(mappedBy="pedido",cascade=CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
     @lombok.Builder.Default
+    @JoinColumn(name="pedido_id")
     private List<DetallePedido> detallePedidos = new ArrayList<>();
     
     private double total;
 
-    private void agregarDetalle(DetallePedido detallePedido) {
-        this.detallePedidos.add(detallePedido);
-    }
-
-    private void calcularTotal() {
-        this.total = detallePedidos.stream()
-                .mapToDouble(DetallePedido::getSubtotal)
-                .sum();
-    }
 }

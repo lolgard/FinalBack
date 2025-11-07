@@ -20,14 +20,8 @@ public class DetallePedido extends Base {
     private int cantidad;
     private double subtotal;
 
-    @ManyToOne()
-    @JoinColumn(name = "pedido_id", nullable = false)
-    private Pedido pedido;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
-
-    
 
 }

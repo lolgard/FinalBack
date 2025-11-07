@@ -46,4 +46,17 @@ public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, Pr
         }
 		return super.crear(createDto);
 	}
+
+    @Override
+    public void reducirStock(Long productoId, int cantidad) {
+        Producto producto = productoRepository.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + productoId));
+
+        if (producto.getStock() < cantidad) {
+            throw new RuntimeException("Stock insuficiente para el producto con ID: " + productoId);
+        }
+
+        producto.setStock(producto.getStock() - cantidad);
+        productoRepository.save(producto);
+    }
 }

@@ -6,5 +6,4 @@ import BakendFinal.entities.DTOs.detallePedido.DetallePedidoEdit;
 import BakendFinal.services.BaseService;
 
 public interface DetallePedidoService extends BaseService<DetallePedidoDTO, DetallePedidoCreate, DetallePedidoEdit, Long>{
-    
 }

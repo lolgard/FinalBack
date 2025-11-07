@@ -37,12 +37,9 @@ public class DetallePedidoServiceImp extends BaseServiceImp<DetallePedido,Detall
         }else if(producto.getStock() < createDto.cantidad()){
             throw new RuntimeException("Stock insuficiente para el producto con ID: " + createDto.productoId());
         }
-        Pedido pedido = pedidoRepository.findById(createDto.pedidoId()).orElse(null);
-        if(pedido == null){
-            throw new RuntimeException("Pedido no encontrado con ID: " + createDto.pedidoId());
-        }
         return super.crear(createDto);
     }
+
 }
     
 

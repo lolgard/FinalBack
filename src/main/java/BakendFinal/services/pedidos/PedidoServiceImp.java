@@ -1,37 +1,58 @@
 package BakendFinal.services.pedidos;
 
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import BakendFinal.entities.DTOs.detallePedido.DetallePedidoDTO;
 import BakendFinal.entities.DTOs.pedido.PedidoCreate;
 import BakendFinal.entities.DTOs.pedido.PedidoDTO;
 import BakendFinal.entities.DTOs.pedido.PedidoEdit;
-import BakendFinal.entities.models.DetallePedido;
+import BakendFinal.entities.DTOs.productos.ProductoDTO;
+import BakendFinal.entities.enums.Estado;
 import BakendFinal.entities.models.Pedido;
 import BakendFinal.services.BaseServiceImp;
-import BakendFinal.services.detallePedido.DetallePedidoService;
+import BakendFinal.services.productos.ProductoService;
 
-
-public class PedidoServiceImp extends BaseServiceImp<Pedido,PedidoDTO,PedidoCreate,PedidoEdit,Long> implements PedidoService {
+public class PedidoServiceImp extends BaseServiceImp<Pedido, PedidoDTO, PedidoCreate, PedidoEdit, Long> implements PedidoService {
 
     @Autowired
-    DetallePedidoService detallePedidoService;
+    ProductoService productoService;
+
     @Override
     public PedidoDTO actualizar(Long id, PedidoEdit editDto) {
-        // TODO Auto-generated method stub
-        return super.actualizar(id, editDto);
+        Pedido pedido = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+        if (editDto.estado() != null) {
+            validarEstado(pedido.getEstado(), editDto.estado());
+            pedido.setEstado(editDto.estado());
+        }
+        Pedido pedidoActualizado = baseRepository.save(pedido);
+        return baseMapper.toDto(pedidoActualizado);
+    }
+
+    private void validarEstado(Estado estadoActual, Estado estadoNuevo) {
+        if (estadoActual == Estado.TERMINADO) {
+            throw new RuntimeException("No se puede cambiar el estado de un pedido Terminado");
+        }
+        if (estadoActual == Estado.CANCELADO && estadoNuevo != Estado.CANCELADO) {
+            throw new RuntimeException("No se puede cambiar el estado de un pedido Cancelado");
+        }
     }
 
     @Override
     public PedidoDTO crear(PedidoCreate createDto) {
-        List<DetallePedidoDTO> detalles = createDto.detalles().stream().map(detalleCreate->{
-            return detallePedidoService.crear(detalleCreate);
-        }).collect(Collectors.toList());
+        if (createDto.detalles().isEmpty()) {
+            throw new RuntimeException("El pedido debe contener al menos un detalle.");
+        }
+        createDto.detalles().forEach(detalle -> {
+            ProductoDTO producto = productoService.obtenerPorId(detalle.productoId());
+            if (producto == null) {
+                throw new RuntimeException("Producto no encontrado con ID: " + detalle.productoId());
+            } else if (producto.stock() < detalle.cantidad()) {
+                throw new RuntimeException("Stock insuficiente para el producto con ID: " + detalle.productoId());
+            } else {
+                productoService.reducirStock(detalle.productoId(), detalle.cantidad());
+            }
+        });
         return super.crear(createDto);
     }
-    
 }

@@ -1,11 +1,10 @@
 package BakendFinal.entities.DTOs.pedido;
 
-import java.util.List;
+import BakendFinal.entities.enums.Estado;
 
-import BakendFinal.entities.models.DetallePedido;
 
 public record  PedidoEdit(
-    List<DetallePedido> detalles
+    Estado estado
 ){
     
 }

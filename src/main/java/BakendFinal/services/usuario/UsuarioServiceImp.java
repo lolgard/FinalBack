@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import BakendFinal.entities.DTOs.usuario.UsuarioDTO;
 import BakendFinal.entities.DTOs.usuario.UsuarioEdit;
 import BakendFinal.entities.DTOs.usuario.UsuarioCreate;
+import BakendFinal.entities.models.Pedido;
 import BakendFinal.entities.models.Usuario;
+import BakendFinal.repositories.PedidoRepository;
 import BakendFinal.repositories.UsuarioRepository;
 import BakendFinal.services.BaseServiceImp;
 import BakendFinal.utils.PasswordUtils;
@@ -16,6 +18,8 @@ public class UsuarioServiceImp extends BaseServiceImp<Usuario, UsuarioDTO, Usuar
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     @Override
     public UsuarioDTO crear(UsuarioCreate dto) {
@@ -56,5 +60,15 @@ public class UsuarioServiceImp extends BaseServiceImp<Usuario, UsuarioDTO, Usuar
         usuario.setLoggedIn(false);
         usuarioRepository.save(usuario);
         return baseMapper.toDto(usuario);
+    }
+
+    @Override
+    public void añadirPedido(Long usuarioId, Long pedidoId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
+        Pedido pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + pedidoId));
+        usuario.getPedidos().add(pedido);
+        usuarioRepository.save(usuario);
     }
 }
