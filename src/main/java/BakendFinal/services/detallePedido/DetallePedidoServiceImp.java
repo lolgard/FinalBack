@@ -1,19 +1,19 @@
 package BakendFinal.services.detallePedido;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoCreate;
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoDTO;
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoEdit;
 import BakendFinal.entities.models.DetallePedido;
-import BakendFinal.entities.models.Pedido;
+
 import BakendFinal.entities.models.Producto;
 import BakendFinal.repositories.PedidoRepository;
 import BakendFinal.repositories.ProductoRepository;
 import BakendFinal.services.BaseServiceImp;
-
+@Service
 public class DetallePedidoServiceImp extends BaseServiceImp<DetallePedido,DetallePedidoDTO,DetallePedidoCreate,DetallePedidoEdit,Long> implements DetallePedidoService{
 
     @Autowired
