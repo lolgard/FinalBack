@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import BakendFinal.entities.DTOs.detallePedido.DetallePedidoCreate;
+import BakendFinal.entities.DTOs.informacionDeEntrega.InformacionDeEntregaCreate;
 
 public record PedidoCreate(
     LocalDate fecha,
     List<DetallePedidoCreate> detalles,
-    Long usuarioId
+    Long usuarioId,
+    InformacionDeEntregaCreate informacionDeEntrega
 ) {
     
 }

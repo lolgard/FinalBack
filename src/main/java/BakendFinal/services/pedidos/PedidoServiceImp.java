@@ -1,7 +1,5 @@
 package BakendFinal.services.pedidos;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import BakendFinal.entities.DTOs.pedido.PedidoCreate;
@@ -9,6 +7,7 @@ import BakendFinal.entities.DTOs.pedido.PedidoDTO;
 import BakendFinal.entities.DTOs.pedido.PedidoEdit;
 import BakendFinal.entities.DTOs.productos.ProductoDTO;
 import BakendFinal.entities.enums.Estado;
+import BakendFinal.entities.models.DetallePedido;
 import BakendFinal.entities.models.Pedido;
 import BakendFinal.services.BaseServiceImp;
 import BakendFinal.services.productos.ProductoService;
@@ -42,19 +41,39 @@ public class PedidoServiceImp extends BaseServiceImp<Pedido, PedidoDTO, PedidoCr
 
     @Override
     public PedidoDTO crear(PedidoCreate createDto) {
+        // Validar que el pedido tenga detalles
         if (createDto.detalles().isEmpty()) {
             throw new RuntimeException("El pedido debe contener al menos un detalle.");
         }
+        
+        // Validar stock de productos (sin reducir aún)
         createDto.detalles().forEach(detalle -> {
             ProductoDTO producto = productoService.obtenerPorId(detalle.productoId());
             if (producto == null) {
                 throw new RuntimeException("Producto no encontrado con ID: " + detalle.productoId());
             } else if (producto.stock() < detalle.cantidad()) {
                 throw new RuntimeException("Stock insuficiente para el producto con ID: " + detalle.productoId());
-            } else {
-                productoService.reducirStock(detalle.productoId(), detalle.cantidad());
             }
         });
-        return super.crear(createDto);
+        
+        // Convertir PedidoCreate a entidad Pedido
+        Pedido pedido = baseMapper.toEntity(createDto);
+        
+        // Calcular el total del pedido
+        Double total = pedido.getDetallePedidos().stream()
+                .mapToDouble(DetallePedido::getSubtotal)
+                .sum();
+        pedido.setTotal(total);
+        
+        // Guardar el pedido (cascada guardará los detalles)
+        Pedido pedidoGuardado = baseRepository.save(pedido);
+        
+        // Reducir stock de productos DESPUÉS de guardar exitosamente
+        createDto.detalles().forEach(detalle -> {
+            productoService.reducirStock(detalle.productoId(), detalle.cantidad());
+        });
+        
+        // Convertir a DTO y retornar
+        return baseMapper.toDto(pedidoGuardado);
     }
 }
