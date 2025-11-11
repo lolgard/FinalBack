@@ -1,7 +1,6 @@
 .PHONY: help build up down restart logs logs-backend logs-db clean rebuild status
 
 # Variables
-COMPOSE_FILE=docker compose.yml
 SERVICE_BACKEND=backend
 SERVICE_DB=db
 
@@ -29,12 +28,15 @@ restart: ## Reinicia los contenedores
 	@echo "✅ Contenedores reiniciados"
 
 logs: ## Muestra los logs de todos los servicios
+	@echo "📜 Mostrando logs de todos los servicios..."
 	docker compose logs -f
 
 logs-backend: ## Muestra los logs del backend
+	@echo "📜 Mostrando logs del backend..."
 	docker compose logs -f $(SERVICE_BACKEND)
 
 logs-db: ## Muestra los logs de la base de datos
+	@echo "📜 Mostrando logs de la base de datos..."
 	docker compose logs -f $(SERVICE_DB)
 
 status: ## Muestra el estado de los contenedores
@@ -57,15 +59,16 @@ start: ## Inicia los contenedores detenidos
 	docker compose up -d
 	@echo "✅ Contenedores iniciados"
 
-shell-backend: ## Abre una shell en el contenedor del backend
-	docker compose logs backend -f 
-
-shell-db: ## Abre una shell en el contenedor de MySQL
-	docker compose logs db -f
-
 bash-backend:
-	@echo "Iniciando bash del backend"
-	docker compose exec backend bash
+	@echo "▶️ Iniciando bash del backend"
+	docker compose exec $(SERVICE_BACKEND) bash
+	@echo "✅ Bash backend iniciado"
 bash-db:
-	@echo "Bash DB"
-	docker compose exec db bash
+	@echo "▶️ Iniciando el bash de la DB"
+	docker compose exec $(SERVICE_DB) mysql -u root -proot db_proyecto_final"
+	@echo "✅ Bash DB iniciado"
+
+db-show-tables:
+	@echo "▶️ Mostrando tablas de la DB"
+	docker compose exec $(SERVICE_DB) mysql -u root -proot -e "USE db_proyecto_final; SHOW TABLES;"
+	@echo "✅ Tablas mostradas"
