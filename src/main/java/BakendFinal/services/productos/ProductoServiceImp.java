@@ -10,8 +10,10 @@ import BakendFinal.entities.models.Producto;
 import BakendFinal.repositories.CategoriaRepository;
 import BakendFinal.repositories.ProductoRepository;
 import BakendFinal.services.BaseServiceImp;
+
 @Service
-public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, ProductoCreate, ProductoEdit, Long> implements ProductoService {
+public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, ProductoCreate, ProductoEdit, Long>
+        implements ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
@@ -19,33 +21,35 @@ public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, Pr
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-	@Override
-	public ProductoDTO actualizar(Long id, ProductoEdit editDto) {
-        Producto producto = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    @Override
+    public ProductoDTO actualizar(Long id, ProductoEdit editDto) {
+        Producto producto = baseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         producto.setNombre(editDto.nombre());
         producto.setPrecio(editDto.precio());
         producto.setImagen(editDto.imagen());
         producto.setStock(editDto.stock());
-        if(editDto.categoriaId() != null){
-            if(!categoriaRepository.existsById(editDto.categoriaId())){
+        if (editDto.categoriaId() != null) {
+            if (!categoriaRepository.existsById(editDto.categoriaId())) {
                 throw new RuntimeException("Categoría no existente o eliminada");
             }
             producto.setCategoria(categoriaRepository.findById(editDto.categoriaId()).get());
         }
         baseRepository.save(producto);
         return baseMapper.toDto(producto);
-	}
+    }
 
-	@Override
-	public ProductoDTO crear(ProductoCreate createDto) {
-        if (productoRepository.existsByNombre(createDto.nombre()) && productoRepository.existsByMarca(createDto.marca())) {
+    @Override
+    public ProductoDTO crear(ProductoCreate createDto) {
+        if (productoRepository.existsByNombre(createDto.nombre())
+                && productoRepository.existsByMarca(createDto.marca())) {
             throw new RuntimeException("El producto existe o esta eliminado");
         }
-        if(createDto.categoriaId() != null && !categoriaRepository.existsById(createDto.categoriaId())){
+        if (createDto.categoriaId() != null && !categoriaRepository.existsById(createDto.categoriaId())) {
             throw new RuntimeException("Categoría no existente o eliminada");
         }
-		return super.crear(createDto);
-	}
+        return super.crear(createDto);
+    }
 
     @Override
     public void reducirStock(Long productoId, int cantidad) {
@@ -57,6 +61,14 @@ public class ProductoServiceImp extends BaseServiceImp<Producto, ProductoDTO, Pr
         }
 
         producto.setStock(producto.getStock() - cantidad);
+        productoRepository.save(producto);
+    }
+
+    @Override
+    public void aumentarStock(Long productoId, int cantidad) {
+        Producto producto = productoRepository.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + productoId));
+        producto.setStock(producto.getStock() + cantidad);
         productoRepository.save(producto);
     }
 }

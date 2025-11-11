@@ -23,19 +23,28 @@ public class PedidoServiceImp extends BaseServiceImp<Pedido, PedidoDTO, PedidoCr
     public PedidoDTO actualizar(Long id, PedidoEdit editDto) {
         Pedido pedido = baseRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
         if (editDto.estado() != null) {
-            validarEstado(pedido.getEstado(), editDto.estado());
+            validarEstado(pedido.getEstado(), editDto.estado(),id);
             pedido.setEstado(editDto.estado());
         }
         Pedido pedidoActualizado = baseRepository.save(pedido);
         return baseMapper.toDto(pedidoActualizado);
     }
 
-    private void validarEstado(Estado estadoActual, Estado estadoNuevo) {
+    private void validarEstado(Estado estadoActual, Estado estadoNuevo, Long pedidoId) {
         if (estadoActual == Estado.TERMINADO) {
             throw new RuntimeException("No se puede cambiar el estado de un pedido Terminado");
         }
         if (estadoActual == Estado.CANCELADO && estadoNuevo != Estado.CANCELADO) {
             throw new RuntimeException("No se puede cambiar el estado de un pedido Cancelado");
+        }
+
+        if(estadoNuevo == Estado.CANCELADO) {
+            Pedido pedido = baseRepository.findById(pedidoId)
+                    .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + pedidoId));
+
+            for (DetallePedido detalle : pedido.getDetallePedidos()) {
+                productoService.aumentarStock(detalle.getProducto().getId(), detalle.getCantidad());
+            }
         }
     }
 
@@ -52,6 +61,7 @@ public class PedidoServiceImp extends BaseServiceImp<Pedido, PedidoDTO, PedidoCr
             if (producto == null) {
                 throw new RuntimeException("Producto no encontrado con ID: " + detalle.productoId());
             } else if (producto.stock() < detalle.cantidad()) {
+                productoService.reducirStock(detalle.productoId(), detalle.cantidad());
                 throw new RuntimeException("Stock insuficiente para el producto con ID: " + detalle.productoId());
             }
         });
@@ -76,4 +86,5 @@ public class PedidoServiceImp extends BaseServiceImp<Pedido, PedidoDTO, PedidoCr
         // Convertir a DTO y retornar
         return baseMapper.toDto(pedidoGuardado);
     }
+
 }
